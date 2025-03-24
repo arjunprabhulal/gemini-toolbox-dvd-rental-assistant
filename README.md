@@ -31,7 +31,7 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 The DVD Rental Assistant follows a streamlined request flow that combines the power of Google Gemini, LlamaIndex, and GenAI Toolbox to process user queries and provide intelligent responses.
 
-![DVD Rental Assistant Request Flow](images/genai-llamaindex-dvd-assist.png)
+![DVD Rental Assistant Request Flow](images/genai-llamaindex-dvd-assist1.png)
 
 ### Core Technologies
 
