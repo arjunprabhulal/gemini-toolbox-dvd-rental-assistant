@@ -10,12 +10,12 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 ## 📚 Table of Contents
 
+- [Request Flow](#request-flow)
 - [Features](#features)
 - [Architecture](#architecture)
   - [Core Technologies](#core-technologies)
   - [Technology Stack Details](#technology-stack-details)
   - [System Architecture](#system-architecture)
-  - [Request Flow](#request-flow)
 - [Implementation Details](#implementation-details)
   - [GenAI Toolbox Integration](#genai-toolbox-integration)
   - [LlamaIndex AgentWorkflow Setup](#llamaindex-agentworkflow-setup)
@@ -27,6 +27,12 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
   - [Endpoints](#endpoints)
 - [Author](#author)
 - [License](#license)
+
+## Request Flow
+
+The DVD Rental Assistant follows a streamlined request flow that combines the power of Google Gemini, LlamaIndex, and GenAI Toolbox to process user queries and provide intelligent responses.
+
+![DVD Rental Assistant Request Flow](images/genai-llamaindex-dvd-assist.png)
 
 ## Features
 
@@ -41,15 +47,11 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 ### Core Technologies
 
-### Core Technologies
-
 | Layer        | Technologies                                                                 | Description                                                                 |
 |--------------|------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
 | **AI/ML**    | - Google Gemini 1.5 Pro<br>- LlamaIndex AgentWorkflow<br>- GenAI Toolbox<br>- NLP | LLM-powered conversational AI with structured agent workflow and tool calling |
 | **Backend**  | - FastAPI (Python 3.9+)<br>- PostgreSQL<br>- GenAI Toolbox Server<br>- WebSocket | High-performance, async backend with structured API and database connectivity |
 | **Frontend** | - Streamlit<br>- Real-time Chat UI<br>- Responsive Components<br>- Interactive Visuals | User-friendly web interface with real-time interaction and modern UX          |
-
-### Technology Stack Details
 
 ### Technology Stack Details
 
@@ -66,11 +68,26 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 ```mermaid
 graph TD
-    A[User Query] -->|HTTP Request| B[FastAPI Backend]
-    B -->|Process Query| C[LlamaIndex Agent]
-    C -->|Generate Response| D[Google Gemini]
-    C -->|Execute Tools| E[GenAI Toolbox]
-    E -->|Database Operations| F[PostgreSQL]
+    %% Styling
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef service fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
+    classDef database fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
+    classDef ai fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
+    
+    %% Nodes
+    A[User Query]:::default
+    B[FastAPI Backend]:::service
+    C[LlamaIndex Agent]:::ai
+    D[Google Gemini]:::ai
+    E[GenAI Toolbox]:::service
+    F[PostgreSQL]:::database
+    
+    %% Connections with proper spacing
+    A -->|HTTP Request| B
+    B -->|Process Query| C
+    C -->|Generate Response| D
+    C -->|Execute Tools| E
+    E -->|Database Operations| F
     F -->|Results| E
     E -->|Processed Data| C
     D -->|AI Response| C
@@ -78,28 +95,6 @@ graph TD
     B -->|HTTP Response| A
 ```
 
-### Request Flow
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant Frontend
-    participant Backend
-    participant Agent
-    participant Toolbox
-    participant Database
-    
-    User->>Frontend: Submit query
-    Frontend->>Backend: POST /chat
-    Backend->>Agent: Process query
-    Agent->>Toolbox: Select appropriate tool
-    Toolbox->>Database: Execute database operation
-    Database-->>Toolbox: Return results
-    Toolbox-->>Agent: Process results
-    Agent-->>Backend: Generate response
-    Backend-->>Frontend: Return response
-    Frontend-->>User: Display results
-```
 
 ## Implementation Details
 
