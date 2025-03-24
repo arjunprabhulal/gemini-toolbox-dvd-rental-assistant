@@ -48,6 +48,40 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
   - Structured data generation
 - **Usage**: Powers the core intelligence of the DVD rental assistant
 
+#### Advantages of Gemini in This Project
+1. **Seamless Integration**:
+   ```python
+   from llama_index.llms.google_genai import GoogleGenAI
+   
+   # Easy initialization with personal GCP Vertex AI project
+   llm = GoogleGenAI(
+       model="gemini-1.5-pro",
+       vertexai_config={
+           "project": "vertex-ai-experminent",  # Personal GCP project for experimentation
+           "location": "us-central1"
+       }
+   )
+   ```
+
+2. **Key Benefits**:
+   - **Personal GCP Integration**: Direct integration with personal Google Cloud project for experimentation
+   - **Advanced Context Handling**: Better understanding of DVD rental domain queries
+   - **Structured Output**: Reliable generation of formatted responses with emojis
+   - **Cost-Effective**: Competitive pricing for personal projects
+   - **Enterprise Ready**: Built-in security and compliance features
+
+3. **Performance Features**:
+   - Fast response times for real-time DVD rental queries
+   - Efficient handling of complex database operations
+   - Reliable multi-turn conversation support
+   - Consistent output formatting
+
+4. **Integration Benefits**:
+   - Works seamlessly with LlamaIndex AgentWorkflow
+   - Direct connection to GenAI Toolbox for database operations
+   - Built-in error handling and retry mechanisms
+   - Easy configuration through environment variables
+
 #### GenAI Toolbox
 - **Purpose**: Database operations and tool management
 - **Features**:
@@ -65,6 +99,98 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
   - Response formatting
   - Error recovery
 - **Benefits**: Structured conversation flow and reliable tool execution
+
+### GenAI Toolbox Implementation
+
+The project leverages Google's GenAI Toolbox for efficient database operations:
+
+1. **Core Features**:
+   ```python
+   from toolbox_llamaindex import ToolboxClient
+   
+   # Initialize toolbox client
+   client = ToolboxClient("http://127.0.0.1:5000")
+   
+   # Load database tools
+   tools = client.load_toolset()
+   ```
+
+2. **Key Benefits**:
+   - **Simplified Development**: Integrate database tools in less than 10 lines of code
+   - **Better Performance**: Built-in connection pooling and authentication
+   - **Enhanced Security**: Integrated auth for secure data access
+   - **End-to-end Observability**: Built-in metrics and tracing with OpenTelemetry
+
+3. **Tool Configuration**:
+   ```yaml
+   # dvdrental_tools.yaml
+   tools:
+     - name: search_films_by_title
+       description: Search films by title
+       parameters:
+         - name: title
+           type: string
+           description: Film title to search
+   ```
+
+4. **Integration Features**:
+   - Centralized tool management
+   - Easy tool sharing between agents
+   - Version control for tools
+   - Built-in error handling
+   - Connection pooling
+   - Authentication management
+
+5. **Server Setup**:
+   ```bash
+   # Start toolbox server
+   ./toolbox --tools_file "dvdrental_tools.yaml"
+   ```
+
+### LlamaIndex AgentWorkflow Implementation
+
+The project uses LlamaIndex's AgentWorkflow to create an intelligent conversation flow:
+
+1. **Core Components**:
+   ```python
+   from llama_index.core.agent import AgentWorkflow
+   from llama_index.core.tools import ToolMetadata
+   from llama_index.llms import GoogleGenAI
+   
+   # Initialize the agent with tools and LLM
+   agent = AgentWorkflow.from_tools_or_functions(
+       tools,
+       llm=GoogleGenAI(
+           model="gemini-1.5-pro",
+           vertexai_config={
+               "project": "vertex-ai-experminent",
+               "location": "us-central1"
+           }
+       ),
+       system_prompt=DVD_RENTAL_PROMPT
+   )
+   ```
+
+2. **Key Features**:
+   - **Tool Selection**: Automatically selects appropriate tools based on user queries
+   - **Context Management**: Maintains conversation history and context
+   - **Event Handling**: Manages tool calls, results, and responses
+   - **Streaming Support**: Real-time response generation
+   - **Error Recovery**: Built-in error handling and retry mechanisms
+
+3. **Workflow Events**:
+   - `AgentInput`: Processes user queries
+   - `AgentStream`: Handles streaming responses
+   - `AgentOutput`: Manages final responses
+   - `ToolCall`: Executes database operations
+   - `ToolCallResult`: Processes tool execution results
+
+4. **Integration Benefits**:
+   - Seamless connection between Gemini and GenAI Toolbox
+   - Structured conversation flow
+   - Reliable tool execution
+   - Context-aware responses
+   - Error handling and recovery
 
 ### Architecture Overview
 
@@ -156,43 +282,101 @@ graph TD
 - GenAI Toolbox access
 
 ### Installation
-1. Clone the repository:
+
+1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/dvd-rental-assistant.git
-   cd dvd-rental-assistant
+   git clone https://github.com/arjunprabhulal/gemini-toolbox-dvd-rental-assistant.git
+   cd gemini-toolbox-dvd-rental-assistant
    ```
 
-2. Install dependencies:
+2. **Set Up Virtual Environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Set up environment variables:
+4. **Configure Environment Variables**:
    ```bash
    cp .env.example .env
-   # Edit .env with your credentials
+   # Edit .env with your credentials:
+   # GOOGLE_API_KEY=your_gemini_api_key
+   # TOOLBOX_URL=http://127.0.0.1:5000
    ```
 
-4. Initialize the database:
+5. **Download and Setup GenAI Toolbox**:
    ```bash
-   # Follow database setup instructions
+   # Download the toolbox binary
+   curl -L https://github.com/google/generative-ai-toolbox/releases/latest/download/toolbox-darwin-amd64 -o toolbox
+   chmod +x toolbox
+
+   # Verify toolbox installation
+   ./toolbox --version
    ```
 
-### Running the Application
-1. Start the backend server:
+6. **Database Setup**:
+   ```bash
+   # Create PostgreSQL database
+   psql -U postgres
+   CREATE DATABASE toolbox_db;
+   \c toolbox_db
+   \q
+
+   # Download and load Pagila database
+   mkdir -p database/pagila
+   cd database/pagila
+   curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-schema.sql
+   curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-data.sql
+   curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-insert-data.sql
+
+   # Load schema and data
+   psql -U postgres -d toolbox_db -f pagila-schema.sql
+   psql -U postgres -d toolbox_db -f pagila-data.sql
+   psql -U postgres -d toolbox_db -f pagila-insert-data.sql
+   ```
+
+   > **Note**: This project uses the [Pagila](https://github.com/devrimgunduz/pagila) sample database, which is a port of the Sakila example database for PostgreSQL. It provides a standard schema for DVD rental operations with tables for films, customers, rentals, and more. The database includes sample data that helps demonstrate various PostgreSQL features including partitioning, full-text search, and JSONB support.
+
+7. **Start GenAI Toolbox**:
+   ```bash
+   ./toolbox --tools_file "dvdrental_tools.yaml"
+   ```
+
+8. **Start Backend Server**:
    ```bash
    uvicorn backend:app --reload
    ```
 
-2. Start the frontend:
+9. **Start Frontend**:
    ```bash
-   streamlit run frontend.py
+   streamlit run streamlit_app.py
    ```
 
-3. Access the application:
-   ```
-   http://localhost:8000
-   ```
+10. **Access the Application**:
+    ```
+    Backend: http://localhost:8000
+    Frontend: http://localhost:8501
+    ```
+
+### Project Structure
+```
+gemini-toolbox-dvd-rental-assistant/
+├── database/
+│   └── pagila/
+│       ├── pagila-schema.sql    # Database schema
+│       ├── pagila-data.sql      # Initial data
+│       └── pagila-insert-data.sql # Additional data
+├── backend.py                   # FastAPI backend
+├── streamlit_app.py            # Streamlit frontend
+├── prompts.py                  # System prompts
+├── dvdrental_tools.yaml        # Database configuration
+├── requirements.txt            # Dependencies
+└── .env                        # Environment variables
+```
 
 ## 📝 API Documentation
 
@@ -235,10 +419,7 @@ graph TD
 }
 ```
 
-## 📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👨‍💻 Author
-Arjun Prabhulal - [Medium](https://medium.com/@arjunprabhulal)
+## Author
+For more articles on AI/ML and Generative AI, follow me on Medium: https://medium.com/@arjun-prabhulal
 
 
