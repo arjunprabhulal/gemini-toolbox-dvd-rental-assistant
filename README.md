@@ -10,12 +10,11 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 ## 📚 Table of Contents
 
-- [Request Flow](#request-flow)
-- [Features](#features)
 - [Architecture](#architecture)
   - [Core Technologies](#core-technologies)
   - [Technology Stack Details](#technology-stack-details)
   - [System Architecture](#system-architecture)
+- [Features](#features)
 - [Implementation Details](#implementation-details)
   - [GenAI Toolbox Integration](#genai-toolbox-integration)
   - [LlamaIndex AgentWorkflow Setup](#llamaindex-agentworkflow-setup)
@@ -28,22 +27,11 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 - [Author](#author)
 - [License](#license)
 
-## Request Flow
+## Architecture
 
 The DVD Rental Assistant follows a streamlined request flow that combines the power of Google Gemini, LlamaIndex, and GenAI Toolbox to process user queries and provide intelligent responses.
 
 ![DVD Rental Assistant Request Flow](images/genai-llamaindex-dvd-assist.png)
-
-## Features
-
-- Natural language understanding for DVD rental queries
-- Real-time database operations through GenAI Toolbox
-- Intelligent conversation flow with LlamaIndex
-- Context-aware responses with Google Gemini
-- Structured data presentation with emojis
-- Smart search capabilities across film database
-
-## Architecture
 
 ### Core Technologies
 
@@ -66,35 +54,16 @@ The DVD Rental Assistant follows a streamlined request flow that combines the po
 
 ### System Architecture
 
-```mermaid
-graph TD
-    %% Styling
-    classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px;
-    classDef service fill:#e1f5fe,stroke:#0288d1,stroke-width:2px;
-    classDef database fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px;
-    classDef ai fill:#e8f5e9,stroke:#388e3c,stroke-width:2px;
-    
-    %% Nodes
-    A[User Query]:::default
-    B[FastAPI Backend]:::service
-    C[LlamaIndex Agent]:::ai
-    D[Google Gemini]:::ai
-    E[GenAI Toolbox]:::service
-    F[PostgreSQL]:::database
-    
-    %% Connections with proper spacing
-    A -->|HTTP Request| B
-    B -->|Process Query| C
-    C -->|Generate Response| D
-    C -->|Execute Tools| E
-    E -->|Database Operations| F
-    F -->|Results| E
-    E -->|Processed Data| C
-    D -->|AI Response| C
-    C -->|Final Response| B
-    B -->|HTTP Response| A
-```
+The system follows a modern microservices architecture with clear separation of concerns between the frontend, backend, and AI components. The architecture is designed to be scalable, maintainable, and efficient in handling DVD rental queries and operations.
 
+## Features
+
+- Natural language understanding for DVD rental queries
+- Real-time database operations through GenAI Toolbox
+- Intelligent conversation flow with LlamaIndex
+- Context-aware responses with Google Gemini
+- Structured data presentation with emojis
+- Smart search capabilities across film database
 
 ## Implementation Details
 
