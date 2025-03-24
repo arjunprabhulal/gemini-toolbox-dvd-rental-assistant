@@ -39,7 +39,7 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 ### Technology Details
 
-#### Google Gemini Integration
+#### 1. Google Gemini Integration
 - **Model**: Gemini 1.5 Pro
 - **Features**:
   - Natural language understanding
@@ -48,7 +48,7 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
   - Structured data generation
 - **Usage**: Powers the core intelligence of the DVD rental assistant
 
-#### GenAI Toolbox
+#### 2. GenAI Toolbox
 - **Purpose**: Database operations and tool management
 - **Features**:
   - SQL query generation
@@ -57,7 +57,7 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
   - Error handling
 - **Integration**: Seamless connection between AI and database
 
-#### LlamaIndex AgentWorkflow
+#### 3. LlamaIndex AgentWorkflow
 - **Role**: Conversation and tool execution management
 - **Features**:
   - Tool selection logic
@@ -65,6 +65,40 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
   - Response formatting
   - Error recovery
 - **Benefits**: Structured conversation flow and reliable tool execution
+
+#### 4. FastAPI Backend
+- **Framework**: Modern, fast web framework for building APIs
+- **Features**:
+  - Async/await support for high performance
+  - Automatic API documentation with Swagger UI
+  - Built-in data validation
+  - WebSocket support for real-time communication
+- **Usage**: Powers the RESTful API endpoints and WebSocket connections
+
+#### 5. Streamlit UI
+- **Framework**: Modern web interface for data applications
+- **Features**:
+  - Real-time chat interface
+  - Interactive data visualization
+  - Responsive design
+  - Session state management
+- **Components**:
+  - Chat message history
+  - User input forms
+  - Loading indicators
+  - Error message displays
+
+#### 6. Pydantic Models
+- **Purpose**: Data validation and settings management
+- **Features**:
+  - Type checking
+  - Data validation
+  - JSON serialization
+  - Environment variable management
+- **Usage**:
+  - Request/response models
+  - Configuration management
+  - Database schema validation
 
 ### GenAI Toolbox Implementation
 
@@ -221,24 +255,6 @@ graph TD
    - Follow-up question generation
    - Context maintenance
 
-### Error Handling and Recovery
-
-1. **Basic Error Handling**:
-   - FastAPI HTTP exceptions for API errors
-   - Basic logging for request tracking
-   - Simple retry mechanism for toolbox operations
-   - Basic rate limiting with sleep
-
-2. **Toolbox Integration**:
-   - Connection verification
-   - Basic error responses
-   - Tool execution error handling
-
-3. **User Context Management**:
-   - Context reset functionality
-   - Basic user session handling
-   - Simple error messages
-
 ## Getting Started
 
 ### Prerequisites
@@ -297,12 +313,10 @@ graph TD
    cd database/pagila
    curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-schema.sql
    curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-data.sql
-   curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-insert-data.sql
 
    # Load schema and data
    psql -U postgres -d toolbox_db -f pagila-schema.sql
    psql -U postgres -d toolbox_db -f pagila-data.sql
-   psql -U postgres -d toolbox_db -f pagila-insert-data.sql
    ```
 
    > **Note**: This project uses the [Pagila](https://github.com/devrimgunduz/pagila) sample database, which is a port of the Sakila example database for PostgreSQL. It provides a standard schema for DVD rental operations with tables for films, customers, rentals, and more. The database includes sample data that helps demonstrate various PostgreSQL features including partitioning, full-text search, and JSONB support.
