@@ -223,6 +223,6 @@ gemini-toolbox-dvd-rental-assistant/
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
 ## Author
-For more articles on AI/ML and Generative AI, follow me on [Medium](https://medium.com/@arjun-prabhulal)
+For more articles on AI/ML and Generative AI, follow me on medium [Arjun Prabhulal](https://medium.com/@arjun-prabhulal)
 
 
