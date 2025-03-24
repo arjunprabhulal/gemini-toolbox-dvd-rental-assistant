@@ -4,7 +4,9 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.109.0-green.svg)](https://fastapi.tiangolo.com/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.31.0-red.svg)](https://streamlit.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.0-blue.svg)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
+A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI and Streamlit. This project demonstrates the integration of Google's latest AI technology with GenAI Toolbox and LlamaIndex to create an intelligent DVD rental management system.
 
 ## 📚 Table of Contents
 
@@ -28,7 +30,6 @@
 - [Author](#author)
 - [License](#license)
 
-
 ## Features
 
 - Natural language understanding for DVD rental queries
@@ -38,7 +39,7 @@
 - Structured data presentation with emojis
 - Smart search capabilities across film database
 
-## 🏗️ Architecture
+## Architecture
 
 ### Core Technologies
 
@@ -98,7 +99,7 @@ sequenceDiagram
     Frontend-->>User: Display results
 ```
 
-## 🛠️ Implementation Details
+## Implementation Details
 
 ### GenAI Toolbox Integration
 
@@ -133,7 +134,7 @@ agent = AgentWorkflow.from_tools_or_functions(
 )
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 - Python 3.9+
@@ -207,7 +208,7 @@ agent = AgentWorkflow.from_tools_or_functions(
    Frontend: http://localhost:8501
    ```
 
-## 📁 Project Structure
+## Project Structure
 ```
 gemini-toolbox-dvd-rental-assistant/
 ├── database/
@@ -223,7 +224,7 @@ gemini-toolbox-dvd-rental-assistant/
 └── .env                        # Environment variables
 ```
 
-## 📚 API Documentation
+## API Documentation
 
 ### Endpoints
 
@@ -259,11 +260,12 @@ POST /reset-context/user123
   "status_code": 400
 }
 ```
-## 📄 License
+
+## License
 
 This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
-## 👨‍💻 Author
+## Author
 For more articles on AI/ML and Generative AI, follow me on [Medium](https://medium.com/@arjun-prabhulal)
 
 
