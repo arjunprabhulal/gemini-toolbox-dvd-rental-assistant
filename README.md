@@ -43,22 +43,26 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 ### Core Technologies
 
-| Layer | Technologies | Description |
-|-------|--------------|-------------|
-| **AI/ML** | • Google Gemini 1.5 Pro<br>• LlamaIndex AgentWorkflow<br>• GenAI Toolbox<br>• Natural Language Processing | Advanced language model for natural understanding and context-aware responses |
-| **Backend** | • FastAPI (Python 3.9+)<br>• PostgreSQL Database<br>• GenAI Toolbox Server<br>• WebSocket Support | High-performance async web framework with robust data storage |
-| **Frontend** | • Streamlit<br>• Real-time chat interface<br>• Responsive UI components<br>• Interactive visualizations | Modern, responsive web interface for user interaction |
+### ⚙️ Core Technologies
+
+| Layer        | Technologies                                                                 | Description                                                                 |
+|--------------|------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
+| **AI/ML**    | - Google Gemini 1.5 Pro<br>- LlamaIndex AgentWorkflow<br>- GenAI Toolbox<br>- NLP | LLM-powered conversational AI with structured agent workflow and tool calling |
+| **Backend**  | - FastAPI (Python 3.9+)<br>- PostgreSQL<br>- GenAI Toolbox Server<br>- WebSocket | High-performance, async backend with structured API and database connectivity |
+| **Frontend** | - Streamlit<br>- Real-time Chat UI<br>- Responsive Components<br>- Interactive Visuals | User-friendly web interface with real-time interaction and modern UX          |
 
 ### Technology Stack Details
 
-| Technology | Purpose | Key Features | Usage |
-|------------|---------|--------------|--------|
-| **Google Gemini** | Core AI Engine | • Natural language understanding<br>• Context-aware responses<br>• Multi-turn conversation support<br>• Structured data generation | Powers the core intelligence of the DVD rental assistant |
-| **GenAI Toolbox** | Database Operations | • SQL query generation<br>• Database connection management<br>• Result processing<br>• Error handling | Seamless connection between AI and database |
-| **LlamaIndex AgentWorkflow** | Conversation Management | • Tool selection logic<br>• Context maintenance<br>• Response formatting<br>• Error recovery | Structured conversation flow and reliable tool execution |
-| **FastAPI Backend** | API Framework | • Async/await support<br>• Automatic API documentation<br>• Built-in data validation<br>• WebSocket support | Powers the RESTful API endpoints and WebSocket connections |
-| **Streamlit UI** | Frontend Interface | • Real-time chat interface<br>• Interactive data visualization<br>• Responsive design<br>• Session state management | Modern web interface for user interaction |
-| **Pydantic Models** | Data Validation | • Type checking<br>• Data validation<br>• JSON serialization<br>• Environment variable management | Request/response models and configuration management |
+### 🧰 Technology Stack Details
+
+| Technology                  | Purpose                 | Key Features                                                                                              | Usage                                                        |
+|----------------------------|-------------------------|-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| **Google Gemini**          | Core AI Engine          | - Natural language understanding<br>- Context-aware multi-turn responses<br>- Structured data generation | Drives conversational intelligence and user intent detection |
+| **GenAI Toolbox**          | Database Operations     | - SQL query execution<br>- Tool abstraction<br>- Secure DB access<br>- Error handling                    | Enables seamless AI-to-PostgreSQL communication              |
+| **LlamaIndex AgentWorkflow** | Conversation Orchestration | - Tool selection logic<br>- Context tracking<br>- Modular response formatting                            | Manages structured flow between LLM and tools                |
+| **FastAPI**                | API Backend             | - Async I/O<br>- Auto-generated Swagger docs<br>- Pydantic validation                                     | Hosts REST API endpoints and WebSocket connections           |
+| **Streamlit**              | Frontend Interface      | - Real-time chat<br>- Emoji support<br>- Responsive layout<br>- State handling                           | Delivers dynamic and intuitive UI to users                   |
+| **Pydantic**               | Data Validation Layer   | - Type enforcement<br>- JSON serialization<br>- Env parsing                                               | Ensures structured, safe request and response data handling  |
 
 ### System Architecture
 
