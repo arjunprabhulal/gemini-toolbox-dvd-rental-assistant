@@ -12,8 +12,7 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 - [Architecture](#architecture)
   - [Core Technologies](#core-technologies)
-  - [Technology Stack Details](#technology-stack-details)
-  - [System Architecture](#system-architecture)
+  - [Technology Highlights](#technology-highlights)
 - [Features](#features)
 - [Implementation Details](#implementation-details)
   - [GenAI Toolbox Integration](#genai-toolbox-integration)
@@ -21,6 +20,13 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation Steps](#installation-steps)
+    - [Clone Repository](#1-clone-repository)
+    - [Environment Setup](#2-environment-setup)
+    - [Configuration](#3-configuration)
+    - [GenAI Toolbox Setup](#4-genai-toolbox-setup)
+    - [Database Setup](#5-database-setup)
+    - [Start Services](#6-start-services)
+    - [Access Application](#7-access-application)
 - [Project Structure](#project-structure)
 - [API Documentation](#api-documentation)
   - [Endpoints](#endpoints)
@@ -35,26 +41,32 @@ The DVD Rental Assistant follows a streamlined request flow that combines the po
 
 ### Core Technologies
 
-| Layer        | Technologies                                                                 | Description                                                                 |
-|--------------|------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| **AI/ML**    | - Google Gemini 1.5 Pro<br>- LlamaIndex AgentWorkflow<br>- GenAI Toolbox<br>- NLP | LLM-powered conversational AI with structured agent workflow and tool calling |
-| **Backend**  | - FastAPI (Python 3.9+)<br>- PostgreSQL<br>- GenAI Toolbox Server<br>- WebSocket | High-performance, async backend with structured API and database connectivity |
-| **Frontend** | - Streamlit<br>- Real-time Chat UI<br>- Responsive Components<br>- Interactive Visuals | User-friendly web interface with real-time interaction and modern UX          |
+| Layer        | Technologies                             | Description                                 |
+|--------------|------------------------------------------|---------------------------------------------|
+| **AI/ML**    | Google Gemini, LlamaIndex, GenAI Toolbox | LLM-driven conversational AI and tool calls |
+| **Backend**  | FastAPI, PostgreSQL, WebSocket           | Async API with structured DB integration    |
+| **Frontend** | Streamlit, Real-time UI                  | Interactive, responsive user interface      |
 
-### Technology Stack Details
+### Technology Highlights
 
-| Technology                  | Purpose                 | Key Features                                                                                              | Usage                                                        |
-|----------------------------|-------------------------|-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
-| **Google Gemini**          | Core AI Engine          | - Natural language understanding<br>- Context-aware multi-turn responses<br>- Structured data generation | Drives conversational intelligence and user intent detection |
-| **GenAI Toolbox**          | Database Operations     | - SQL query execution<br>- Tool abstraction<br>- Secure DB access<br>- Error handling                    | Enables seamless AI-to-PostgreSQL communication              |
-| **LlamaIndex AgentWorkflow** | Conversation Orchestration | - Tool selection logic<br>- Context tracking<br>- Modular response formatting                            | Manages structured flow between LLM and tools                |
-| **FastAPI**                | API Backend             | - Async I/O<br>- Auto-generated Swagger docs<br>- Pydantic validation                                     | Hosts REST API endpoints and WebSocket connections           |
-| **Streamlit**              | Frontend Interface      | - Real-time chat<br>- Emoji support<br>- Responsive layout<br>- State handling                           | Delivers dynamic and intuitive UI to users                   |
-| **Pydantic**               | Data Validation Layer   | - Type enforcement<br>- JSON serialization<br>- Env parsing                                               | Ensures structured, safe request and response data handling  |
+- **Google Gemini**  
+  Powers conversational AI and context-aware interactions.
 
-### System Architecture
+- **LlamaIndex**  
+  Manages conversation flow and tool orchestration.
 
-The system follows a modern microservices architecture with clear separation of concerns between the frontend, backend, and AI components. The architecture is designed to be scalable, maintainable, and efficient in handling DVD rental queries and operations.
+- **GenAI Toolbox**  
+  Handles secure database operations and SQL execution.
+
+- **FastAPI**  
+  Provides async API services, automatic documentation, and data validation.
+
+- **Streamlit**  
+  Enables real-time, interactive, and intuitive frontend experiences.
+
+- **Pydantic**  
+  Ensures data integrity through structured validation and serialization.
+
 
 ## Features
 
@@ -110,20 +122,20 @@ agent = AgentWorkflow.from_tools_or_functions(
 
 ### Installation Steps
 
-### 1. **Clone Repository**
+#### 1. **Clone Repository**
    ```bash
    git clone https://github.com/arjunprabhulal/gemini-toolbox-dvd-rental-assistant.git
    cd gemini-toolbox-dvd-rental-assistant
    ```
 
-### 2. **Environment Setup**
+#### 2. **Environment Setup**
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
 
-### 3. **Configuration**
+#### 3. **Configuration**
    ```bash
    cp .env.example .env
    # Edit .env with your credentials:
@@ -131,14 +143,14 @@ agent = AgentWorkflow.from_tools_or_functions(
    # TOOLBOX_URL=http://127.0.0.1:5000
    ```
 
-### 4. **GenAI Toolbox Setup**
+#### 4. **GenAI Toolbox Setup**
    ```bash
    curl -L https://github.com/google/generative-ai-toolbox/releases/latest/download/toolbox-darwin-amd64 -o toolbox
    chmod +x toolbox
    ./toolbox --version
    ```
 
-### 5. **Database Setup**
+#### 5. **Database Setup**
 
 This project uses the [Pagila](https://github.com/devrimgunduz/pagila) database — an example schema designed for PostgreSQL, inspired by the Sakila schema for MySQL.
 
@@ -162,7 +174,7 @@ This project uses the [Pagila](https://github.com/devrimgunduz/pagila) database 
    psql -U postgres -d toolbox_db -f pagila-data.sql
    ```
 
-### 6. **Start Services**
+#### 6. **Start Services**
    ```bash
    # Start GenAI Toolbox
    ./toolbox --tools_file "dvdrental_tools.yaml"
@@ -174,7 +186,7 @@ This project uses the [Pagila](https://github.com/devrimgunduz/pagila) database 
    streamlit run streamlit_app.py
    ```
 
-### 7. **Access Application**
+#### 7. **Access Application**
    ```
    Backend: http://localhost:8000
    Frontend: http://localhost:8501
