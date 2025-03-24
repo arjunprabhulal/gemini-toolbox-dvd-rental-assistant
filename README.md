@@ -32,73 +32,16 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
    - Responsive UI components - Mobile-friendly design
    - Interactive visualizations - Dynamic data presentation
 
-4. **Infrastructure**:
-   - Environment-based configuration - Using .env for API keys and settings
-   - Logging system - Python logging for request tracking and error handling
-   - Error handling - FastAPI error management and retry mechanisms
-
 ### Technology Details
 
-#### 1. Google Gemini Integration
-- **Model**: Gemini 1.5 Pro
-- **Features**:
-  - Natural language understanding
-  - Context-aware responses
-  - Multi-turn conversation support
-  - Structured data generation
-- **Usage**: Powers the core intelligence of the DVD rental assistant
-
-#### 2. GenAI Toolbox
-- **Purpose**: Database operations and tool management
-- **Features**:
-  - SQL query generation
-  - Database connection management
-  - Result processing
-  - Error handling
-- **Integration**: Seamless connection between AI and database
-
-#### 3. LlamaIndex AgentWorkflow
-- **Role**: Conversation and tool execution management
-- **Features**:
-  - Tool selection logic
-  - Context maintenance
-  - Response formatting
-  - Error recovery
-- **Benefits**: Structured conversation flow and reliable tool execution
-
-#### 4. FastAPI Backend
-- **Framework**: Modern, fast web framework for building APIs
-- **Features**:
-  - Async/await support for high performance
-  - Automatic API documentation with Swagger UI
-  - Built-in data validation
-  - WebSocket support for real-time communication
-- **Usage**: Powers the RESTful API endpoints and WebSocket connections
-
-#### 5. Streamlit UI
-- **Framework**: Modern web interface for data applications
-- **Features**:
-  - Real-time chat interface
-  - Interactive data visualization
-  - Responsive design
-  - Session state management
-- **Components**:
-  - Chat message history
-  - User input forms
-  - Loading indicators
-  - Error message displays
-
-#### 6. Pydantic Models
-- **Purpose**: Data validation and settings management
-- **Features**:
-  - Type checking
-  - Data validation
-  - JSON serialization
-  - Environment variable management
-- **Usage**:
-  - Request/response models
-  - Configuration management
-  - Database schema validation
+| Technology | Purpose | Key Features | Usage |
+|------------|---------|--------------|--------|
+| **Google Gemini** | Core AI Engine | • Natural language understanding<br>• Context-aware responses<br>• Multi-turn conversation support<br>• Structured data generation | Powers the core intelligence of the DVD rental assistant |
+| **GenAI Toolbox** | Database Operations | • SQL query generation<br>• Database connection management<br>• Result processing<br>• Error handling | Seamless connection between AI and database |
+| **LlamaIndex AgentWorkflow** | Conversation Management | • Tool selection logic<br>• Context maintenance<br>• Response formatting<br>• Error recovery | Structured conversation flow and reliable tool execution |
+| **FastAPI Backend** | API Framework | • Async/await support<br>• Automatic API documentation<br>• Built-in data validation<br>• WebSocket support | Powers the RESTful API endpoints and WebSocket connections |
+| **Streamlit UI** | Frontend Interface | • Real-time chat interface<br>• Interactive data visualization<br>• Responsive design<br>• Session state management | Modern web interface for user interaction |
+| **Pydantic Models** | Data Validation | • Type checking<br>• Data validation<br>• JSON serialization<br>• Environment variable management | Request/response models and configuration management |
 
 ### GenAI Toolbox Implementation
 
