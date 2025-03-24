@@ -1,0 +1,221 @@
+sources:
+  my-pg-source:
+    kind: postgres
+    host: 127.0.0.1
+    port: 5432
+    database: toolbox_db
+    user: toolbox_user
+    password: my-password
+tools:
+  list-all-films:
+    kind: postgres-sql
+    source: my-pg-source
+    description: List all films in the inventory.
+    statement: SELECT film_id, title, release_year, length, rating FROM film ORDER BY title LIMIT 50;
+  
+  search-films-by-title:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Search for films by title.
+    parameters:
+      - name: title
+        type: string
+        description: The title or partial title of the film.
+    statement: SELECT film_id, title, description, release_year, length, rating FROM film WHERE title ILIKE '%' || $1 || '%' ORDER BY title;
+  
+  search-films-by-category:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Search for films by category.
+    parameters:
+      - name: category
+        type: string
+        description: The category name.
+    statement: SELECT f.film_id, f.title, f.release_year, f.length, f.rating FROM film f JOIN film_category fc ON f.film_id = fc.film_id JOIN category c ON fc.category_id = c.category_id WHERE c.name ILIKE '%' || $1 || '%' ORDER BY f.title;
+  
+  get-film-details:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Get detailed information about a specific film.
+    parameters:
+      - name: film_id
+        type: string
+        description: The ID of the film.
+    statement: SELECT f.film_id, f.title, f.description, f.release_year, f.length, f.rating, f.rental_rate, f.replacement_cost, l.name as language, c.name as category FROM film f JOIN language l ON f.language_id = l.language_id JOIN film_category fc ON f.film_id = fc.film_id JOIN category c ON fc.category_id = c.category_id WHERE f.film_id = $1;
+  
+  list-customers:
+    kind: postgres-sql
+    source: my-pg-source
+    description: List customers in the system.
+    statement: SELECT customer_id, first_name, last_name, email FROM customer ORDER BY last_name, first_name LIMIT 50;
+  
+  search-customers:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Search for customers by name.
+    parameters:
+      - name: name
+        type: string
+        description: The name or partial name of the customer.
+    statement: SELECT customer_id, first_name, last_name, email FROM customer WHERE first_name ILIKE '%' || $1 || '%' OR last_name ILIKE '%' || $1 || '%' ORDER BY last_name, first_name;
+  
+  get-customer-rentals:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Get rental history for a specific customer.
+    parameters:
+      - name: customer_id
+        type: string
+        description: The ID of the customer.
+    statement: SELECT r.rental_id, f.title, r.rental_date, r.return_date, CASE WHEN r.return_date IS NULL THEN 'Not returned' ELSE 'Returned' END as status FROM rental r JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id WHERE r.customer_id = $1 ORDER BY r.rental_date DESC;
+  
+  get-overdue-rentals:
+    kind: postgres-sql
+    source: my-pg-source
+    description: List all overdue rentals.
+    statement: SELECT r.rental_id, c.first_name || ' ' || c.last_name as customer, f.title, r.rental_date, CURRENT_DATE - r.rental_date as days_out FROM rental r JOIN inventory i ON r.inventory_id = i.inventory_id JOIN film f ON i.film_id = f.film_id JOIN customer c ON r.customer_id = c.customer_id WHERE r.return_date IS NULL AND r.rental_date + INTERVAL '7 days' < CURRENT_DATE ORDER BY days_out DESC;
+  
+  create-rental:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Create a new rental.
+    parameters:
+      - name: customer_id
+        type: string
+        description: The ID of the customer.
+      - name: film_id
+        type: string
+        description: The ID of the film to rent.
+    statement: WITH available_inventory AS (SELECT inventory_id FROM inventory WHERE film_id = $2 AND inventory_id NOT IN (SELECT inventory_id FROM rental WHERE return_date IS NULL) LIMIT 1) INSERT INTO rental (rental_date, inventory_id, customer_id, staff_id, return_date) SELECT CURRENT_TIMESTAMP, inventory_id, $1, 1, NULL FROM available_inventory RETURNING rental_id;
+  
+  return-rental:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Mark a rental as returned.
+    parameters:
+      - name: rental_id
+        type: string
+        description: The ID of the rental.
+    statement: UPDATE rental SET return_date = CURRENT_TIMESTAMP WHERE rental_id = $1 AND return_date IS NULL;
+  
+  get-film-availability:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Check if a film is available for rental.
+    parameters:
+      - name: film_id
+        type: string
+        description: The ID of the film.
+    statement: SELECT f.title, count(i.inventory_id) as total_copies, count(i.inventory_id) - count(r.rental_id) as available_copies FROM film f JOIN inventory i ON f.film_id = i.film_id LEFT JOIN rental r ON i.inventory_id = r.inventory_id AND r.return_date IS NULL WHERE f.film_id = $1 GROUP BY f.title;
+  
+  top-rented-films:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Get the most frequently rented films.
+    statement: SELECT f.film_id, f.title, COUNT(r.rental_id) as rental_count FROM film f JOIN inventory i ON f.film_id = i.film_id JOIN rental r ON i.inventory_id = r.inventory_id GROUP BY f.film_id, f.title ORDER BY rental_count DESC LIMIT 10;
+  
+  top-rented-films-by-category:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Get the most frequently rented films in a specific category.
+    parameters:
+      - name: category
+        type: string
+        description: The category name (e.g., Action, Comedy, Children, etc.)
+    statement: >-
+      SELECT f.film_id, f.title, COUNT(r.rental_id) as rental_count
+      FROM film f
+      JOIN film_category fc ON f.film_id = fc.film_id
+      JOIN category c ON fc.category_id = c.category_id
+      JOIN inventory i ON f.film_id = i.film_id
+      JOIN rental r ON i.inventory_id = r.inventory_id
+      WHERE c.name ILIKE '%' || $1 || '%'
+      GROUP BY f.film_id, f.title
+      ORDER BY rental_count DESC
+      LIMIT 10;
+  
+  count-films:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Get total count of films in the database.
+    statement: "SELECT COUNT(*) as total_films FROM film;"
+
+  count-categories:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Get count of films in each category.
+    statement: "SELECT 
+        c.name as category,
+        COUNT(f.film_id) as film_count
+      FROM category c
+      LEFT JOIN film_category fc ON c.category_id = fc.category_id
+      LEFT JOIN film f ON fc.film_id = f.film_id
+      GROUP BY c.name
+      ORDER BY film_count DESC;"
+
+  count-films-by-year:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Get count of films released in each year.
+    statement: "SELECT 
+        release_year,
+        COUNT(*) as film_count
+      FROM film
+      WHERE release_year IS NOT NULL
+      GROUP BY release_year
+      ORDER BY release_year DESC;"
+
+  films-by-year:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Get all films from a specific year
+    parameters:
+    - name: year
+      type: integer
+      description: The year to search for
+    statement: "SELECT 
+        f.film_id,
+        f.title,
+        f.description,
+        f.rental_rate as price,
+        f.rating,
+        string_agg(DISTINCT c.name, ', ') as categories
+      FROM film f
+      LEFT JOIN film_category fc ON f.film_id = fc.film_id
+      LEFT JOIN category c ON fc.category_id = c.category_id
+      WHERE f.release_year = $1
+      GROUP BY f.film_id, f.title, f.description, f.rental_rate, f.rating
+      ORDER BY f.title
+      LIMIT 50;"
+
+  add-customer:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Add a new customer to the system.
+    parameters:
+      - name: store_id
+        type: integer
+        description: The ID of the store where the customer is registered.
+      - name: first_name
+        type: string
+        description: The customer's first name.
+      - name: last_name
+        type: string
+        description: The customer's last name.
+      - name: email
+        type: string
+        description: The customer's email address.
+      - name: address_id
+        type: integer
+        description: The ID of the customer's address.
+    statement: INSERT INTO customer (store_id, first_name, last_name, email, address_id) VALUES ($1, $2, $3, $4, $5) RETURNING customer_id;
+
+  get-film-categories:
+    kind: postgres-sql
+    source: my-pg-source
+    description: Get categories for a specific film by title.
+    parameters:
+      - name: title
+        type: string
+        description: The title of the film.
+    statement: SELECT f.title, string_agg(c.name, ', ') as categories FROM film f JOIN film_category fc ON f.film_id = fc.film_id JOIN category c ON fc.category_id = c.category_id WHERE f.title = $1 GROUP BY f.title; 
