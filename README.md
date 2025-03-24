@@ -1,29 +1,59 @@
 # DVD Rental Assistant with Google Gemini + GenAI Toolbox + LlamaIndex
 
-A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI and Streamlit.
+A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI and Streamlit. This project demonstrates the integration of Google's latest AI technology with GenAI Toolbox and LlamaIndex to create an intelligent DVD rental management system.
 
-## Technical Stack
+## 🌟 Key Features
+
+### 1. Intelligent Film Search
+- Natural language film queries
+- Advanced filtering by genre, year, and rating
+- Smart recommendations based on viewing history
+- Detailed film information including cast and reviews
+
+### 2. Customer Management
+- Customer profile creation and management
+- Rental history tracking
+- Payment processing
+- Loyalty program integration
+
+### 3. Rental Operations
+- Real-time availability checking
+- Automated rental processing
+- Return date management
+- Late fee calculation
+
+### 4. Analytics Dashboard
+- Rental trends visualization
+- Popular films analysis
+- Customer behavior insights
+- Revenue reporting
+
+## 🛠️ Technical Stack
 
 ### Core Technologies
 1. **AI/ML Layer**:
    - Google Gemini 1.5 Pro
    - LlamaIndex AgentWorkflow
    - GenAI Toolbox
+   - Natural Language Processing
 
 2. **Backend Layer**:
    - FastAPI (Python 3.9+)
    - PostgreSQL Database
    - GenAI Toolbox Server
+   - WebSocket Support
 
 3. **Frontend Layer**:
    - Streamlit
-   - WebSocket for real-time chat
+   - Real-time chat interface
    - Responsive UI components
+   - Interactive visualizations
 
 4. **Infrastructure**:
    - Docker support
    - OpenTelemetry monitoring
    - Environment-based configuration
+   - CI/CD pipeline
 
 ### Architecture Overview
 
@@ -37,456 +67,312 @@ graph TD
     F -->|Tool Execution| C
 ```
 
-### Key Technical Features
+## 🔍 Application Details
 
-1. **AI Integration**:
-   - Real-time natural language processing
-   - Context-aware responses
+### Core Application Features
+
+1. **Intelligent Chat Interface**:
+   - Natural language understanding for complex queries
+   - Context-aware responses with conversation history
+   - Real-time streaming of AI responses
    - Multi-turn conversation support
-   - Dynamic tool selection
+   - Emoji-enhanced responses for better readability
 
-2. **Database Architecture**:
-   - Connection pooling
-   - Query optimization
-   - Transaction management
-   - Error handling
+2. **Film Management System**:
+   - Comprehensive film database with 1000+ titles
+   - Advanced search capabilities:
+     - Title-based search
+     - Genre filtering
+     - Year-based filtering
+     - Rating-based filtering
+   - Detailed film information:
+     - Cast and crew details
+     - Plot summaries
+     - Rental rates
+     - Availability status
 
-3. **API Design**:
-   - RESTful endpoints
-   - WebSocket support
-   - Rate limiting
-   - Error handling
+3. **Customer Service Features**:
+   - Customer profile management
+   - Rental history tracking
+   - Payment processing
+   - Loyalty program integration
+   - Personalized recommendations
 
-4. **Security Features**:
-   - API key authentication
-   - Database encryption
-   - Input validation
-   - XSS protection
+4. **Rental Management**:
+   - Real-time inventory checking
+   - Automated rental processing
+   - Return date management
+   - Late fee calculation
+   - Rental history tracking
 
-### Technical Implementation Details
+### Tool Integration Details
 
-1. **Backend Architecture**:
+1. **GenAI Toolbox Integration**:
    ```python
-   # FastAPI Application Structure
-   app = FastAPI()
-   
-   # WebSocket Support
-   @app.websocket("/ws/chat")
-   async def websocket_endpoint(websocket: WebSocket):
-       await websocket.accept()
-       # Handle real-time chat
-   
-   # API Routes
-   @app.post("/api/chat")
-   async def chat_endpoint(message: ChatMessage):
-       # Process chat messages
-   ```
-
-2. **Database Integration**:
-   ```python
-   # GenAI Toolbox Configuration
+   # Toolbox Configuration
    tools = ToolboxClient("http://127.0.0.1:5000").load_toolset()
    
-   # Database Operations
-   @tool
-   def search_films(title: str):
-       # Optimized film search
+   # Available Tools
+   - search_films_by_title: Search films by title
+   - get_film_availability: Check film availability
+   - get_film_details: Get detailed film information
+   - get_customer_rentals: View customer rental history
+   - process_rental: Handle rental transactions
    ```
 
-3. **AI Processing Pipeline**:
+2. **LlamaIndex Agent Configuration**:
    ```python
-   # LlamaIndex Agent Setup
+   # Agent Setup
    agent = AgentWorkflow.from_tools_or_functions(
        tools,
-       llm=GoogleGenAI(model="gemini-1.5-pro"),
+       llm=GoogleGenAI(
+           model="gemini-1.5-pro",
+           vertexai_config={
+               "project": "vertex-ai-experminent",
+               "location": "us-central1"
+           }
+       ),
        system_prompt=DVD_RENTAL_PROMPT
    )
    ```
 
-4. **Frontend Components**:
-   ```python
-   # Streamlit UI Components
-   st.title("DVD Rental Assistant")
-   chat_container = st.container()
-   input_container = st.container()
-   ```
-
-### Performance Considerations
-
-1. **Database Optimization**:
-   - Indexed queries
-   - Connection pooling
-   - Query caching
-   - Batch operations
-
-2. **AI Processing**:
-   - Response streaming
-   - Context management
-   - Tool selection optimization
-   - Error recovery
-
-3. **API Performance**:
-   - Rate limiting
-   - Response compression
-   - Caching headers
-   - Load balancing
-
-4. **Frontend Optimization**:
-   - Lazy loading
-   - Component caching
-   - State management
-   - Real-time updates
-
-### Monitoring and Observability
-
-1. **OpenTelemetry Integration**:
-   - Request tracing
-   - Performance metrics
-   - Error tracking
-   - Usage analytics
-
-2. **Logging System**:
-   - Structured logging
-   - Log levels
-   - Error tracking
-   - Performance monitoring
-
-3. **Health Checks**:
-   - Database connectivity
-   - API availability
-   - AI service status
-   - System resources
-
-## Core Technologies
-
-### 1. Google Gemini + GenAI Toolbox + LlamaIndex Integration
-The application combines three powerful technologies:
-
-#### Google Gemini AI
-```python
-from llama_index.llms.google_genai import GoogleGenAI
-llm = GoogleGenAI(
-    model="gemini-1.5-pro",
-    vertexai_config={"project": "vertex-ai-experminent", "location": "us-central1"},
-)
-```
-- Uses Gemini 1.5 Pro for advanced natural language understanding
-- Provides context-aware responses with high accuracy
-- Maintains conversation context across interactions
-- Handles complex queries with sophisticated reasoning
-
-#### GenAI Toolbox Integration
-```python
-from toolbox_llamaindex import ToolboxClient
-client = ToolboxClient("http://127.0.0.1:5000")
-tools = client.load_toolset()
-```
-- **Multi-Database Support**: Works with various databases including:
-  - PostgreSQL (used in this demo)
-  - MySQL
-  - SQLite
-  - MongoDB
-  - And more...
-- **Tool Management**: Dynamic loading of database tools
-- **Performance**: Built-in connection pooling
-- **Security**: Integrated authentication and access control
-- **Observability**: OpenTelemetry support for monitoring
-
-#### LlamaIndex AgentWorkflow
-```python
-from llama_index.core.agent.workflow import AgentWorkflow
-from llama_index.core.workflow import Context
-
-agent = AgentWorkflow.from_tools_or_functions(
-    tools,
-    llm=llm,
-    system_prompt=DVD_RENTAL_PROMPT,
-)
-```
-- **Conversation Flow**: Manages the entire conversation lifecycle
-- **Tool Execution**: Coordinates between LLM and database tools
-- **Context Management**: Maintains conversation state and history
-- **Event Handling**: Processes various workflow events:
-  - `AgentInput`: Handles user input
-  - `AgentOutput`: Manages LLM responses
-  - `ToolCall`: Executes database operations
-  - `ToolCallResult`: Processes operation results
-
-### 2. GenAI Toolbox Architecture
-
-The application leverages the GenAI Toolbox architecture for efficient database operations:
-
-```mermaid
-graph TD
-    A[LLM/Agent] -->|Tool Calls| B[Toolbox Server]
-    B -->|Query Execution| C[Database]
-    B -->|Tool Management| D[Tool Registry]
-    B -->|Authentication| E[Auth Service]
-    B -->|Monitoring| F[OpenTelemetry]
-```
-
-#### Key Components:
-
-1. **Toolbox Server**:
-   - Central hub for tool execution
-   - Manages database connections
-   - Handles authentication
-   - Provides monitoring capabilities
-
-2. **Tool Registry**:
-   - Stores tool definitions
-   - Manages tool versions
-   - Handles tool updates
-   - Provides tool documentation
-
-3. **Database Integration**:
-   - Connection pooling
-   - Query optimization
-   - Error handling
-   - Transaction management
-
-4. **Security Layer**:
-   - Authentication service
-   - Access control
-   - API key management
-   - Request validation
-
-5. **Monitoring**:
-   - OpenTelemetry integration
-   - Performance metrics
-   - Error tracking
-   - Usage analytics
-
-### 3. Workflow Architecture
-
-```mermaid
-graph TD
-    A[User Input] --> B[AgentWorkflow]
-    B --> C[Gemini LLM]
-    C --> D[Tool Selection]
-    D --> E[GenAI Toolbox]
-    E --> F[Database Operations]
-    F --> G[Response Generation]
-    G --> H[User Output]
-```
-
-1. **Input Processing**:
-   - User query received by AgentWorkflow
-   - Context maintained across interactions
-   - Input validated and processed
-
-2. **LLM Processing**:
-   - Gemini analyzes the query
-   - Determines required tools
-   - Generates response strategy
-
-3. **Tool Execution**:
-   - GenAI Toolbox loads appropriate tools
-   - Executes database operations
-   - Handles results and errors
-
-4. **Response Generation**:
-   - Results formatted with emojis
-   - Follow-up questions generated
-   - Context updated for next interaction
-
-### 4. Smart Prompt System
-The application uses a structured prompt system:
-
-#### Full System Prompt
-```python
-DVD_RENTAL_PROMPT = '''
-You're a DVD rental store assistant. You help customers find films, manage rentals, and provide recommendations.
-[Comprehensive database schema and operations...]
-'''
-```
-
-#### Simple Prompt
-```python
-SIMPLE_PROMPT = '''
-You are a helpful DVD rental assistant. Your job is to:
-1. Help customers find movies using search-films-by-title
-2. Check if movies are available using get-film-availability
-3. Show movie details with get-film-details
-4. Format responses with emojis: 🎬 for titles, ⭐ for ratings, 💲 for prices
-5. Always end with a friendly follow-up question
-'''
-```
-
-### 4. Database Integration
-The application uses GenAI Toolbox's multi-database support. In this demo, we're using PostgreSQL with the Pagila schema, but the system can work with any supported database:
-
-#### Supported Databases
-- **PostgreSQL**: Used in this demo with Pagila schema
-- **MySQL**: Full support for MySQL databases
-- **SQLite**: Lightweight database support
-- **And more**: Extensible to other database types
-
-#### Demo Database (PostgreSQL)
-For demonstration purposes, we use PostgreSQL with the Pagila schema:
-
-##### Core Tables
-- **films**: Stores movie information (title, description, rental rates)
-- **customers**: Manages customer details and accounts
-- **rentals**: Tracks DVD rentals and returns
-- **payments**: Records all payment transactions
-
-##### Key Relationships
-- Each rental links to a customer and a film
-- Payments are connected to both rentals and customers
-- Films can have multiple rentals over time
-- Customers can have multiple active rentals
-
-#### Database Configuration
-```yaml
-# dvdrental_tools.yaml
-sources:
-  my-pg-source:
-    kind: postgres  # Can be mysql, sqlite, mongodb, etc.
-    host: ${DB_HOST}
-    port: ${DB_PORT}
-    database: ${DB_NAME}
-    user: ${DB_USER}
-    password: ${DB_PASSWORD}
-```
-
-## Features
-
-- 🎬 Smart Film Search: Find movies by title, category, or year
-- 👥 Customer Management: Handle customer accounts and rental history
-- 📦 Real-time Inventory: Check film availability and manage rentals
-- 💬 Natural Conversations: Chat naturally with the AI assistant
-- 🧠 Smart Memory: Maintains context across conversations
-
-## Example Interactions
-
-The assistant can handle various types of questions about movies:
-
-### Movie Search
-```
-User: "Find me the movie Titanic"
-Assistant: "🎬 Let me search for Titanic..."
-[Shows movie details with emojis]
-Would you like to know if it's available to rent?
-```
-
-### Availability Check
-```
-User: "Is The Matrix available?"
-Assistant: "Let me check the availability of 🎬 The Matrix..."
-[Shows availability status]
-Would you like to see more details about this movie?
-```
-
-### Movie Details
-```
-User: "Tell me about Inception"
-Assistant: "🎬 Here are the details for Inception..."
-[Shows movie details with emojis]
-Would you like to know the rental price?
-```
-
-## Setup
-
-### Prerequisites
-
-1. **Install Python 3.9 or higher**
-2. **Install PostgreSQL**
-3. **Get a Gemini API Key** from [Google AI Studio](https://aistudio.google.com/apikey)
-4. **Install Project Dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   pip install llama-index-llms-google-genai
-   ```
-
-### Environment Setup
-
-1. **Set up environment variables** in `.env`:
-   ```
-   GOOGLE_API_KEY=your_gemini_api_key_here
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_NAME=toolbox_db
-   DB_USER=toolbox_user
-   DB_PASSWORD=your_database_password_here
-   ```
-
-2. **Set up GenAI Toolbox**:
-   ```bash
-   export VERSION=0.2.1
-   curl -O https://storage.googleapis.com/genai-toolbox/v$VERSION/linux/amd64/toolbox
-   chmod +x toolbox
-   ./toolbox --tools_file "dvdrental_tools.yaml"
-   ```
-
-3. **Configure database**:
+3. **Database Tools**:
    ```yaml
    # dvdrental_tools.yaml
-   sources:
-     my-pg-source:
-       kind: postgres
-       host: ${DB_HOST}
-       port: ${DB_PORT}
-       database: ${DB_NAME}
-       user: ${DB_USER}
-       password: ${DB_PASSWORD}
+   tools:
+     - name: search_films_by_title
+       description: Search films by title
+       parameters:
+         - name: title
+           type: string
+           description: Film title to search
+     
+     - name: get_film_availability
+       description: Check film availability
+       parameters:
+         - name: film_id
+           type: integer
+           description: ID of the film to check
+   ```
+
+4. **API Endpoints**:
+   ```python
+   # FastAPI Routes
+   @app.get("/health")
+   async def health_check():
+       """Health check endpoint"""
+       try:
+           client = ToolboxClient("http://127.0.0.1:5000")
+           tools = client.load_toolset()
+           return {"status": "healthy", "toolbox_connected": True}
+       except Exception as e:
+           return {"status": "unhealthy", "toolbox_connected": False, "error": str(e)}
+
+   @app.post("/chat", response_model=ChatResponse)
+   async def chat_endpoint(request: ChatRequest):
+       """Handle chat messages with user context"""
+       user_id = request.user_id
+       message = request.message
+       
+       logger.info(f"Received message from user {user_id}: {message}")
+       
+       # Create or retrieve user context
+       if user_id not in user_contexts:
+           agent = get_agent()
+           user_contexts[user_id] = {"agent": agent, "context": Context(agent)}
+           logger.info(f"Created new context for user {user_id}")
+       
+       agent = user_contexts[user_id]["agent"]
+       ctx = user_contexts[user_id]["context"]
+       
+       try:
+           await asyncio.sleep(1)  # Rate limit prevention
+           response = await run_with_retry(agent, message, ctx)
+           return ChatResponse(response=str(response))
+       except Exception as e:
+           logger.error(f"Error processing request from user {user_id}: {str(e)}")
+           raise HTTPException(status_code=500, detail=str(e))
+
+   @app.delete("/reset-context/{user_id}")
+   async def reset_context(user_id: str):
+       """Reset user conversation context"""
+       if user_id in user_contexts:
+           del user_contexts[user_id]
+           logger.info(f"Reset context for user {user_id}")
+           return {"status": "success", "message": f"Context for user {user_id} has been reset"}
+       raise HTTPException(status_code=404, detail=f"No context found for user {user_id}")
+   ```
+
+### API Documentation
+
+1. **REST Endpoints**:
+   - `GET /health`: Health check endpoint
+     - Response: `{"status": "healthy", "toolbox_connected": true}`
+   - `POST /chat`: Process chat messages
+     - Request Body: `{"message": "string", "user_id": "string"}`
+     - Response: `{"response": "string"}`
+   - `DELETE /reset-context/{user_id}`: Reset user context
+     - Response: `{"status": "success", "message": "Context reset message"}`
+
+2. **Features**:
+   - User context management
+   - Rate limiting with exponential backoff
+   - Comprehensive error handling
+   - Logging system
+   - Toolbox connection verification
+
+3. **Error Handling**:
+   - HTTP 500 for server errors
+   - HTTP 404 for not found
+   - Rate limit handling with retries
+   - Detailed error logging
+   - Clean error messages
+
+### Tool Execution Flow
+
+1. **System Architecture**:
+   ```mermaid
+   graph TD
+       A[Frontend - Streamlit] -->|HTTP/REST| B[Backend - FastAPI]
+       B -->|API Calls| C[GenAI Toolbox]
+       C -->|Database Operations| D[PostgreSQL]
+       B -->|LLM Integration| E[Google Gemini]
+       B -->|Agent Management| F[LlamaIndex]
+       F -->|Tool Execution| C
+   ```
+
+2. **Request Flow**:
+   ```mermaid
+   sequenceDiagram
+       participant User
+       participant Frontend
+       participant Backend
+       participant Agent
+       participant Toolbox
+       participant Database
+       
+       User->>Frontend: Submit query
+       Frontend->>Backend: POST /chat
+       Backend->>Agent: Process query
+       Agent->>Toolbox: Select appropriate tool
+       Toolbox->>Database: Execute database operation
+       Database-->>Toolbox: Return results
+       Toolbox-->>Agent: Process results
+       Agent-->>Backend: Generate response
+       Backend-->>Frontend: Return response
+       Frontend-->>User: Display results
+   ```
+
+3. **Tool Selection Logic**:
+   - Natural language understanding of user intent
+   - Context-aware tool selection
+   - Parameter extraction from user queries
+   - Error handling and fallback options
+
+4. **Response Generation**:
+   - Structured data formatting
+   - Emoji enhancement for readability
+   - Follow-up question generation
+   - Context maintenance
+
+### Error Handling and Recovery
+
+1. **Database Errors**:
+   - Connection failure recovery
+   - Query timeout handling
+   - Transaction rollback
+   - Data validation
+
+2. **AI Processing Errors**:
+   - Model timeout handling
+   - Response validation
+   - Fallback responses
+   - Context recovery
+
+3. **API Errors**:
+   - Rate limiting
+   - Input validation
+   - Authentication errors
+   - Network issues
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Python 3.9+
+- PostgreSQL
+- Google Cloud Platform account
+- GenAI Toolbox installed
+
+### Installation
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/arjunprabhulal/gemini-toolbox-dvd-rental-assistant.git
+   cd gemini-toolbox-dvd-rental-assistant
+   ```
+
+2. **Set Up Virtual Environment**:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Configure Environment Variables**:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your credentials
    ```
 
 ### Database Setup
 
 1. **Download Pagila Database**:
    ```bash
-   # Create a directory for database files
    mkdir -p database/pagila
    cd database/pagila
-
-   # Download Pagila database files
    curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-schema.sql
    curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-data.sql
+   curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-insert-data.sql
    ```
 
 2. **Create PostgreSQL Database**:
    ```bash
-   # Connect to PostgreSQL
    psql -U postgres
-
-   # Create database
    CREATE DATABASE toolbox_db;
-
-   # Connect to the new database
    \c toolbox_db
-
-   # Exit psql
    \q
    ```
 
 3. **Load Pagila Schema and Data**:
    ```bash
-   # Load schema
    psql -U postgres -d toolbox_db -f database/pagila/pagila-schema.sql
-
-   # Load data
    psql -U postgres -d toolbox_db -f database/pagila/pagila-data.sql
+   psql -U postgres -d toolbox_db -f database/pagila/pagila-insert-data.sql
    ```
 
-4. **Verify Database Setup**:
+### Starting the Application
+
+1. **Start GenAI Toolbox**:
    ```bash
-   # Connect to database
-   psql -U postgres -d toolbox_db
-
-   # Check tables
-   \dt
-
-   # Check sample data
-   SELECT COUNT(*) FROM film;
-   SELECT COUNT(*) FROM customer;
-   SELECT COUNT(*) FROM rental;
-
-   # Exit psql
-   \q
+   ./toolbox --tools_file "dvdrental_tools.yaml"
    ```
 
-### Project Structure with Database Files
+2. **Start Backend**:
+   ```bash
+   python backend.py
+   ```
+
+3. **Start Frontend**:
+   ```bash
+   streamlit run streamlit_app.py
+   ```
+
+## 📝 Project Structure
+
 ```
 google-genai-toolbox/
 ├── database/
@@ -502,94 +388,91 @@ google-genai-toolbox/
 └── .env                        # Environment variables
 ```
 
-### Database Configuration Details
+## 🔧 Technical Implementation
 
-1. **Environment Variables** (`.env`):
-   ```
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_NAME=toolbox_db
-   DB_USER=postgres
-   DB_PASSWORD=your_password_here
-   ```
+### 1. AI Integration
+- **Google Gemini**: Powers natural language understanding
+- **LlamaIndex**: Manages conversation flow and tool execution
+- **GenAI Toolbox**: Handles database operations
+- **Custom Prompts**: Optimized for DVD rental domain
 
-2. **Database Tools Configuration** (`dvdrental_tools.yaml`):
-   ```yaml
-   sources:
-     my-pg-source:
-       kind: postgres
-       host: ${DB_HOST}
-       port: ${DB_PORT}
-       database: ${DB_NAME}
-       user: ${DB_USER}
-       password: ${DB_PASSWORD}
-       ssl_mode: disable
-       max_connections: 10
-   ```
+### 2. Database Architecture
+- **Schema Design**: Optimized for DVD rental operations
+- **Query Optimization**: Indexed queries for performance
+- **Connection Pooling**: Efficient resource management
+- **Transaction Management**: ACID compliance
 
-3. **Database Schema Overview**:
-   - **films**: 1000+ movies with details
-   - **customers**: Customer information
-   - **rentals**: Rental records
-   - **payments**: Payment transactions
-   - **categories**: Movie categories
-   - **actors**: Actor information
-   - **film_actor**: Movie-actor relationships
+### 3. API Design
+- **RESTful Endpoints**: Clean, intuitive API structure
+- **WebSocket Support**: Real-time chat functionality
+- **Rate Limiting**: Prevents abuse
+- **Error Handling**: Comprehensive error management
 
-4. **Sample Data Verification**:
-   ```sql
-   -- Check total records
-   SELECT COUNT(*) FROM film;           -- Should be 1000+
-   SELECT COUNT(*) FROM customer;       -- Should be 599
-   SELECT COUNT(*) FROM rental;         -- Should be 16044
-   SELECT COUNT(*) FROM payment;        -- Should be 32098
+### 4. Security Features
+- **Authentication**: API key-based security
+- **Input Validation**: Sanitized user inputs
+- **XSS Protection**: Prevents cross-site scripting
+- **Data Encryption**: Secure data transmission
 
-   -- Check sample film
-   SELECT title, release_year, rental_rate 
-   FROM film 
-   WHERE title = 'ACADEMY DINOSAUR';
-   ```
+## 📊 Performance Optimization
 
-### Starting the Application
+### 1. Database Optimization
+- Indexed queries for faster retrieval
+- Connection pooling for resource efficiency
+- Query caching for repeated operations
+- Batch operations for bulk updates
 
-1. **Start GenAI Toolbox**:
-   ```bash
-   # Start toolbox server
-   ./toolbox --tools_file "dvdrental_tools.yaml"
-   ```
+### 2. AI Processing
+- Response streaming for faster feedback
+- Context management for coherent conversations
+- Tool selection optimization
+- Error recovery mechanisms
 
-2. **Start Backend**:
-   ```bash
-   # In a new terminal
-   python backend.py
-   ```
+### 3. Frontend Optimization
+- Lazy loading of components
+- State management for smooth UX
+- Real-time updates via WebSocket
+- Responsive design for all devices
 
-3. **Start Frontend**:
-   ```bash
-   # In another terminal
-   streamlit run streamlit_app.py
-   ```
+## 🔍 Monitoring and Observability
 
-4. **Verify Setup**:
-   - Backend API: http://localhost:8000/docs
-   - Frontend UI: http://localhost:8501
-   - Toolbox Server: http://localhost:5000
+### 1. OpenTelemetry Integration
+- Request tracing for debugging
+- Performance metrics collection
+- Error tracking and reporting
+- Usage analytics
 
-## Project Structure
+### 2. Logging System
+- Structured logging for better analysis
+- Multiple log levels for different scenarios
+- Error tracking with stack traces
+- Performance monitoring
 
-- `backend.py`: FastAPI backend with LLM integration
-- `streamlit_app.py`: Streamlit frontend with chat interface
-- `prompts.py`: System prompts for the AI assistant
-- `dvdrental_tools.yaml`: Database query definitions
-- `requirements.txt`: Project dependencies
-- `.env`: Environment variables
+### 3. Health Checks
+- Database connectivity monitoring
+- API availability checks
+- AI service status verification
+- System resource monitoring
 
-## API Documentation
+## 🤝 Contributing
 
-Access the interactive API documentation at:
-- http://localhost:8000/docs
-- http://localhost:8000/redoc
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-## Author
+## 📝 License
 
-For more articles on AI/ML and Generative AI, follow me on Medium: [@arjun-prabhulal](https://medium.com/@arjun-prabhulal)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Google Gemini AI Team
+- GenAI Toolbox Contributors
+- LlamaIndex Community
+- FastAPI and Streamlit Teams
+
+## 📞 Support
+
+For support, please open an issue in the GitHub repository or contact the maintainers.
