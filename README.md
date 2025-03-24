@@ -2,32 +2,6 @@
 
 A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI and Streamlit. This project demonstrates the integration of Google's latest AI technology with GenAI Toolbox and LlamaIndex to create an intelligent DVD rental management system.
 
-## 🌟 Key Features
-
-### 1. Intelligent Film Search
-- Natural language film queries
-- Advanced filtering by genre, year, and rating
-- Smart recommendations based on viewing history
-- Detailed film information including cast and reviews
-
-### 2. Customer Management
-- Customer profile creation and management
-- Rental history tracking
-- Payment processing
-- Loyalty program integration
-
-### 3. Rental Operations
-- Real-time availability checking
-- Automated rental processing
-- Return date management
-- Late fee calculation
-
-### 4. Analytics Dashboard
-- Rental trends visualization
-- Popular films analysis
-- Customer behavior insights
-- Revenue reporting
-
 ## 🛠️ Technical Stack
 
 ### Core Technologies
