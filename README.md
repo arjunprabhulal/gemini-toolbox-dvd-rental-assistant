@@ -25,8 +25,6 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 - [Project Structure](#project-structure)
 - [API Documentation](#api-documentation)
   - [Endpoints](#endpoints)
-  - [Example Requests](#example-requests)
-  - [Error Response Format](#error-response-format)
 - [Author](#author)
 - [License](#license)
 
@@ -43,7 +41,7 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 ### Core Technologies
 
-### ⚙️ Core Technologies
+### Core Technologies
 
 | Layer        | Technologies                                                                 | Description                                                                 |
 |--------------|------------------------------------------------------------------------------|-----------------------------------------------------------------------------|
@@ -53,7 +51,7 @@ A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI 
 
 ### Technology Stack Details
 
-### 🧰 Technology Stack Details
+### Technology Stack Details
 
 | Technology                  | Purpose                 | Key Features                                                                                              | Usage                                                        |
 |----------------------------|-------------------------|-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
@@ -237,33 +235,6 @@ gemini-toolbox-dvd-rental-assistant/
 | `/health` | GET | System health check |
 | `/chat` | POST | Process user queries |
 | `/reset-context/{user_id}` | POST | Reset user conversation context |
-
-### Example Requests
-
-```http
-# Health Check
-GET /health
-
-# Chat Query
-POST /chat
-Content-Type: application/json
-{
-  "message": "Show me action movies from 2005",
-  "user_id": "user123"
-}
-
-# Reset Context
-POST /reset-context/user123
-```
-
-### Error Response Format
-```json
-{
-  "error": "Error message",
-  "details": "Detailed error information",
-  "status_code": 400
-}
-```
 
 ## License
 
