@@ -6,7 +6,28 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.0-blue.svg)](https://www.postgresql.org/)
 
 
-A modern DVD rental assistant powered by Google's Gemini AI, built with FastAPI and Streamlit. This project demonstrates the integration of Google's latest AI technology with GenAI Toolbox and LlamaIndex to create an intelligent DVD rental management system.
+## 📚 Table of Contents
+
+- [Features](#features)
+- [Architecture](#architecture)
+  - [Core Technologies](#core-technologies)
+  - [Technology Stack Details](#technology-stack-details)
+  - [System Architecture](#system-architecture)
+  - [Request Flow](#request-flow)
+- [Implementation Details](#implementation-details)
+  - [GenAI Toolbox Integration](#genai-toolbox-integration)
+  - [LlamaIndex AgentWorkflow Setup](#llamaindex-agentworkflow-setup)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation Steps](#installation-steps)
+- [Project Structure](#project-structure)
+- [API Documentation](#api-documentation)
+  - [Endpoints](#endpoints)
+  - [Example Requests](#example-requests)
+  - [Error Response Format](#error-response-format)
+- [Author](#author)
+- [License](#license)
+
 
 ## Features
 
@@ -238,6 +259,9 @@ POST /reset-context/user123
   "status_code": 400
 }
 ```
+## 📄 License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
 
 ## 👨‍💻 Author
 For more articles on AI/ML and Generative AI, follow me on [Medium](https://medium.com/@arjun-prabhulal)
