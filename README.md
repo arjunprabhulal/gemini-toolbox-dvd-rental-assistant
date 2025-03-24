@@ -175,19 +175,23 @@ agent = AgentWorkflow.from_tools_or_functions(
    ```
 
 5. **Database Setup**
+This project uses the [Pagila](https://github.com/devrimgunduz/pagila) database, an example schema designed for PostgreSQL, inspired by the Sakila schema for MySQL.
+Thanks to [devrimgunduz/pagila](https://github.com/devrimgunduz/pagila) for providing the Pagila database schema and sample data.
+
    ```bash
-   # Create and load database
+   # Step 1: Create and load database
    psql -U postgres
    CREATE DATABASE toolbox_db;
    \c toolbox_db
    \q
 
-   # Load Pagila database
+   # Step 2: Download Pagila schema and data
    mkdir -p database/pagila
    cd database/pagila
    curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-schema.sql
    curl -O https://raw.githubusercontent.com/devrimgunduz/pagila/master/pagila-data.sql
 
+   # Step 3: Load Pagila into the toolbox_db
    psql -U postgres -d toolbox_db -f pagila-schema.sql
    psql -U postgres -d toolbox_db -f pagila-data.sql
    ```
