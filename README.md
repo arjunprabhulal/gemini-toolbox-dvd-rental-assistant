@@ -146,20 +146,20 @@ agent = AgentWorkflow.from_tools_or_functions(
 
 ### Installation Steps
 
-1. **Clone Repository**
+### 1. **Clone Repository**
    ```bash
    git clone https://github.com/arjunprabhulal/gemini-toolbox-dvd-rental-assistant.git
    cd gemini-toolbox-dvd-rental-assistant
    ```
 
-2. **Environment Setup**
+### 2. **Environment Setup**
    ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
 
-3. **Configuration**
+### 3. **Configuration**
    ```bash
    cp .env.example .env
    # Edit .env with your credentials:
@@ -167,16 +167,18 @@ agent = AgentWorkflow.from_tools_or_functions(
    # TOOLBOX_URL=http://127.0.0.1:5000
    ```
 
-4. **GenAI Toolbox Setup**
+### 4. **GenAI Toolbox Setup**
    ```bash
    curl -L https://github.com/google/generative-ai-toolbox/releases/latest/download/toolbox-darwin-amd64 -o toolbox
    chmod +x toolbox
    ./toolbox --version
    ```
 
-5. **Database Setup**
-This project uses the [Pagila](https://github.com/devrimgunduz/pagila) database, an example schema designed for PostgreSQL, inspired by the Sakila schema for MySQL.
-Thanks to [devrimgunduz/pagila](https://github.com/devrimgunduz/pagila) for providing the Pagila database schema and sample data.
+### 5. **Database Setup**
+
+This project uses the [Pagila](https://github.com/devrimgunduz/pagila) database — an example schema designed for PostgreSQL, inspired by the Sakila schema for MySQL.
+
+**Special thanks to [devrimgunduz/pagila](https://github.com/devrimgunduz/pagila)** for providing the schema and sample data used in this project.
 
    ```bash
    # Step 1: Create and load database
@@ -196,7 +198,7 @@ Thanks to [devrimgunduz/pagila](https://github.com/devrimgunduz/pagila) for prov
    psql -U postgres -d toolbox_db -f pagila-data.sql
    ```
 
-6. **Start Services**
+### 6. **Start Services**
    ```bash
    # Start GenAI Toolbox
    ./toolbox --tools_file "dvdrental_tools.yaml"
@@ -208,7 +210,7 @@ Thanks to [devrimgunduz/pagila](https://github.com/devrimgunduz/pagila) for prov
    streamlit run streamlit_app.py
    ```
 
-7. **Access Application**
+### 7. **Access Application**
    ```
    Backend: http://localhost:8000
    Frontend: http://localhost:8501
